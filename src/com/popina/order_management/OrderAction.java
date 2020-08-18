@@ -3,9 +3,12 @@ package com.popina.order_management;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.popina.properties.DataBaseProperty;
 
 public class OrderAction {
@@ -52,4 +55,26 @@ public class OrderAction {
 		}
 	}
 	
+	public int updateOrderStatus(String jsonOrderUpdate){
+		DataBaseProperty restnt = new DataBaseProperty();
+		int updateFlag=0;
+		try (Connection con = DriverManager.getConnection(restnt.dbJDBCDriver+"://"+restnt.dbConnectionUrl, 
+					restnt.dbUserId, restnt.dbPassword)){
+			
+			JsonObject jsonOrderUpdateObject = new JsonParser().parse(jsonOrderUpdate).getAsJsonObject();
+			
+			
+			PreparedStatement stmt=con.prepareStatement("update orders set orderstatus=? where orderid=?");
+			stmt.setString(1,jsonOrderUpdateObject.get("status").getAsString());
+			stmt.setInt(2,jsonOrderUpdateObject.get("id").getAsInt());
+		
+			updateFlag=stmt.executeUpdate();  
+			return updateFlag;
+		}
+		catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return 0;
+        }	
+	}
 }

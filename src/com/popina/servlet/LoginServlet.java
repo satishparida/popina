@@ -34,6 +34,9 @@ public class LoginServlet extends HttpServlet {
 		}
 		else if (typeOfUser==2) {
 			//admin login
+			HttpSession session = request.getSession();
+			session.setAttribute("typeOfUser", typeOfUser);
+			response.sendRedirect("inventory-manager.html");
 		}
 		else if (typeOfUser==3) {
 			//kitchen manager login

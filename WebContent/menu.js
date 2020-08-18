@@ -6,10 +6,12 @@ function loadMenu(){
 		    
 		    var html = '<form>';
 		    for (item in menu) {
-		    	html += menu[item].productName + ' /Cost: ' + menu[item].productCost 
-		    			+ ' /Availevel: ' + menu[item].productAvalibility 
-		    			+ ' /Order Quantity: <input type="text" name="item' + menu[item].productId 
-		    			+ ' onkeypress = "return onlyNumberKey(event)" /> <br>';
+		    	if (menu[item].productAvalibility > 0) {
+			    	html += menu[item].productName + ' /Cost: ' + menu[item].productCost 
+			    			+ ' /Availevel: ' + menu[item].productAvalibility 
+			    			+ ' /Order Quantity: <input type="text" name="item' + menu[item].productId 
+			    			+ ' onkeypress = "return onlyNumberKey(event)" /> <br>';
+		    	}
 		    }
 		    
 		    html += '<input type="button" value="Place Order" onclick="placeOrder()"/>';

@@ -25,6 +25,7 @@ public class Login {
 				String typeOfUser=resultSet.getString("typeOfUser");
 				if (typeOfUser.equals("user")) loginType=1;
 				else if (typeOfUser.equals("admin")) loginType=2;
+				else if (typeOfUser.equals("kchnmner")) loginType=3;
 				else loginType=0;
 				i=i+1;
 				if (i > 1) loginType=0; //sql injection check
